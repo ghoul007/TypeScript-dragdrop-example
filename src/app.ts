@@ -27,20 +27,20 @@ const validate = (ele: Validatable): boolean => {
 
     if (ele.required) {
         isValid = isValid && ele.value.toString().trim().length !== 0
-    }  
-    
+    }
+
     if (ele.minLength != null && typeof ele.value === 'string') {
         isValid = isValid && ele.value.trim().length > ele.minLength
     }
-   
+
     if (ele.maxLength != null && typeof ele.value === 'string') {
         isValid = isValid && ele.value.trim().length < ele.maxLength
     }
-   
+
     if (ele.min != null && typeof ele.value === 'number') {
         isValid = isValid && ele.value > ele.min
     }
-  
+
     if (ele.max != null && typeof ele.value === 'number') {
         isValid = isValid && ele.value < ele.max
     }
@@ -48,6 +48,42 @@ const validate = (ele: Validatable): boolean => {
 
     return isValid;
 }
+
+
+
+class ProjectList {
+    templateElement: HTMLTemplateElement;
+    hostElement: HTMLDivElement;
+    element: Element;
+
+
+    constructor(private type: 'active' | 'finished') {
+        this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;;
+        this.hostElement = document.getElementById('app') as HTMLDivElement;
+
+        const importedNode = document.importNode(this.templateElement.content, true);
+        this.element = importedNode.firstElementChild as HTMLFormElement
+        this.element.id = `${this.type}-projects`;
+
+        this.attach();
+        this.renderContent();
+
+    }
+
+    private renderContent(){
+        const listId=  `${this.type}-projects-list`;
+        this.element.querySelector('ul')!.id = listId;
+        this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ' PROJECTS';
+
+        
+    }
+
+    private attach() {
+        this.hostElement.insertAdjacentElement('beforeend', this.element)
+    }
+}
+ 
+
 
 class ProjectInput {
     templateElement: HTMLTemplateElement;
@@ -135,3 +171,5 @@ class ProjectInput {
 
 
 const project = new ProjectInput();
+const projectListActive = new ProjectList('active');
+const projectListFinish = new ProjectList('finished');
