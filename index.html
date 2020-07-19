@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>ProjectManager</title>
     <link rel="stylesheet" href="app.css" />
-    <script src="dist/app.js" type="module"  ></script>
+    <script src="dist/bundles.js" type="module"  ></script>
   </head>
   <body>
     <template id="project-input">
@@ -41,6 +41,32 @@
         <ul></ul>
       </section>
     </template>
-    <div id="app"></div>
+	<div id="app"></div>
+	<script>
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", () => {
+				navigator.serviceWorker
+					.register("/sw.js")
+					.then(registration => {
+						console.log("SW registered: ", registration);
+					})
+					.catch(registrationError => {
+						console.log("SW registration failed: ", registrationError);
+					});
+			});
+		}
+	</script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+ 
