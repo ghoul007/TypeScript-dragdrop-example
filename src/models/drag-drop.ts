@@ -1,4 +1,3 @@
-namespace App {
 
 
     // Drag and Drop
@@ -12,4 +11,3 @@ namespace App {
         dropHandler(event: DragEvent): void
         dragLeaveHandler(event: DragEvent): void
     }
-}
